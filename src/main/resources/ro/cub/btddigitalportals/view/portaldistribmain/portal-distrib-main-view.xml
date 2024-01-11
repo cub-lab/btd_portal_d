@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<mainView xmlns="http://jmix.io/schema/flowui/main-view"
+      title="msg://ExtPortalDistribMainView.title">
+    <appLayout drawerOpened="false" primarySection="NAVBAR">
+        <navigationBar>
+            <flexLayout flexDirection="ROW" flexWrap="WRAP" width="100%" alignItems="CENTER">
+                <header id="header" classNames="jmix-main-view-header" height="60px" width="100%" css="background-color: white; margin: 0px; padding:1px;">
+                    <hbox themeNames="spacing" width="100%">
+                        <image resource="images/logo.png" themeNames="scale-down" css="width: 50px; height: 80px;"/>
+                        <div text="msg://ExtPortalDistribMainView.title" themeNames="primary"
+                             css="font-size: 26px; font-style: normal; font-weight: 600; padding-left: 10px; color: gray; padding-top: 18px;">
+                        </div>
+                    </hbox>
+                </header>
+                <section id="section" width="100%">
+                    <hbox themeNames="spacing-s" width="100%" height="70px" css="background-color: #035CB5;
+                                border-top-left-radius: 0;
+                                border-top-right-radius: 0;
+                                border-bottom-right-radius: 10px;
+                                border-bottom-left-radius: 10px;" alignItems="CENTER">
+                        <hbox width="60%" alignItems="AUTO" css="padding-left: 20px;">
+                            <anchor href="cerere-racordare-home" id="cerereRacordareGazeNaturale" text="Cerere racordare gaze naturale" classNames="menu-link" />
+                            <anchor href="users" id="statusCereri" text="Status cererile mele" classNames="menu-link"/>
+                            <anchor href="users" id="informatiiUtile" text="Informatii utile" classNames="menu-link"/>
+                        </hbox>
+                        <hbox width="40%" css="display: flex;
+                                                flex-direction: column;
+                                                flex-wrap: wrap;
+                                                align-content: flex-end;">
+                            <button icon="USER_CARD" css="color: white;"/>
+                        </hbox>
+                    </hbox>
+                </section>
+            </flexLayout>
+        </navigationBar>
+        <drawerLayout/>
+    </appLayout>
+</mainView>

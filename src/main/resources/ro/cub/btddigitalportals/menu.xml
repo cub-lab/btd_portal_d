@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<menu-config xmlns="http://jmix.io/schema/flowui/menu">
+
+    <menu id="application" title="msg://ro.cub.btddigitalportals/menu.application.title" opened="true">
+        <item view="cub_User.list" title="msg://ro.cub.btddigitalportals.view.user/UserListView.title"/>
+        <item view="cub_CerereRacordareHomeView"
+              title="msg://ro.cub.btddigitalportals.view.cerereracordarehome/cerereRacordareHomeView.title"/>
+    </menu>
+
+</menu-config>

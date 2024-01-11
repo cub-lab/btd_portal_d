@@ -1,0 +1,104 @@
+.menu-link{
+    color: white;
+}
+.menu-link:active{
+    color: palegreen;
+}
+.menu-link:focus{
+    color: palegreen;
+    text-decoration-line: underline;
+}
+
+@media (min-width: 576px)
+.dashboardMainDiv {
+    padding: 1.5rem;
+    margin-right: 0;
+    margin-left: 0;
+    border-width: 0.2rem;
+}
+
+.dashboardMainDiv {
+    position: relative;
+}
+
+.dashboardMainDiv::after {
+    display: block;
+    clear: both;
+    content: "";
+}
+
+@media (min-width: 576px)
+.card-deck {
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+@media (max-width: 767px) {
+    .login-info-div {
+        display: none;
+    }
+}
+
+.card-deck {
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: row;
+    flex-flow: wrap;
+}
+
+@media (min-width: 576px)
+.card-deck .card {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex: 1 0 0;
+    flex: 1 0 0;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin-right: 15px;
+    margin-bottom: 0;
+    margin-left: 15px;
+}
+
+.card-deck .card {
+    margin: 10px;
+}
+
+.bg-light {
+    background-color: #f8f9fa!important;
+}
+
+.mb-3 {
+    margin-bottom: 1rem!important;
+}
+
+.card-body {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1rem;
+    border: solid 1px #dddddd;
+}
+
+.card-title {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.2;
+    color: inherit;
+    font-size: 16px;
+}
+
+.card-text {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    font-size: 13px;
+}
