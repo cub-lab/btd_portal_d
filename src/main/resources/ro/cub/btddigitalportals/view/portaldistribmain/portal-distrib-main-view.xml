@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <mainView xmlns="http://jmix.io/schema/flowui/main-view"
       title="msg://ExtPortalDistribMainView.title">
+    <actions>
+        <action id="logout" type="logout"/>
+    </actions>
     <appLayout drawerOpened="false" primarySection="NAVBAR">
         <navigationBar>
             <flexLayout flexDirection="ROW" flexWrap="WRAP" width="100%" alignItems="CENTER">
@@ -23,11 +26,15 @@
                             <anchor href="users" id="statusCereri" text="Status cererile mele" classNames="menu-link"/>
                             <anchor href="users" id="informatiiUtile" text="Informatii utile" classNames="menu-link"/>
                         </hbox>
-                        <hbox width="40%" css="display: flex;
-                                                flex-direction: column;
-                                                flex-wrap: wrap;
-                                                align-content: flex-end;">
-                            <button icon="USER_CARD" css="color: white;"/>
+                        <hbox width="40%" alignItems="CENTER" css="display: flex;
+                                                                    flex-direction: row;
+                                                                    flex-wrap: nowrap;
+                                                                    align-content: center;
+                                                                    justify-content: flex-end;">
+                            <userIndicator id="userIndicator" css="color: white;"/>
+                            <button id="logoutButton"
+                                    action="logout"
+                                    classNames="jmix-logout-button" css="color: white;"/>
                         </hbox>
                     </hbox>
                 </section>
