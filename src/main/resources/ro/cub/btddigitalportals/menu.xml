@@ -5,6 +5,8 @@
         <item view="cub_User.list" title="msg://ro.cub.btddigitalportals.view.user/UserListView.title"/>
         <item view="cub_CerereRacordareHomeView"
               title="msg://ro.cub.btddigitalportals.view.cerereracordarehome/cerereRacordareHomeView.title"/>
+        <item view="cub_RegistrationView"
+              title="msg://ro.cub.btddigitalportals.view.registration/registrationView.title"/>
     </menu>
 
 </menu-config>

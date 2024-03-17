@@ -1,5 +1,5 @@
 plugins {
-    id 'io.jmix' version '2.1.2'
+    id 'io.jmix' version '2.2.1.1'
     id 'java'
 }
 
@@ -7,7 +7,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'com.vaadin'
 
 jmix {
-    bomVersion = '2.1.2'
+    bomVersion = '2.2.1'
     projectId = 'cub'
 }
 
@@ -23,6 +23,8 @@ repositories {
 
 dependencies {
     implementation 'io.jmix.core:jmix-core-starter'
+    implementation 'io.jmix.pessimisticlock:jmix-pessimisticlock-starter'
+    implementation 'io.jmix.pessimisticlock:jmix-pessimisticlock-flowui-starter'
     implementation 'io.jmix.data:jmix-eclipselink-starter'
     implementation 'io.jmix.security:jmix-security-starter'
     implementation 'io.jmix.security:jmix-security-flowui-starter'
@@ -48,6 +50,12 @@ dependencies {
     implementation 'com.oracle.database.jdbc:ojdbc8'
 
     implementation 'io.jmix.translations:jmix-translations-ro'
+    implementation 'io.jmix.email:jmix-email-starter'
+    implementation 'io.jmix.email:jmix-email-flowui-starter'
+
+    // https://mvnrepository.com/artifact/org.freemarker/freemarker
+    implementation 'org.freemarker:freemarker:2.3.32'
+
 }
 
 test {

@@ -2,20 +2,26 @@
 <view xmlns="http://jmix.io/schema/flowui/view"
       focusComponent="login"
       title="msg://LoginView.title">
-    <layout justifyContent="CENTER" alignItems="CENTER" classNames="jmix-login-main-layout">
-        <loginForm id="login"
-                   rememberMeVisible="true"
-                   forgotPasswordButtonVisible="false">
-            <form title="msg://loginForm.headerTitle"
-                  username="msg://loginForm.username"
-                  password="msg://loginForm.password"
-                  rememberMe="msg://loginForm.rememberMe"
-                  submit="msg://loginForm.submit"
-                  forgotPassword="msg://loginForm.forgotPassword"/>
-            <errorMessage title="msg://loginForm.errorTitle"
-                          message="msg://loginForm.badCredentials"
-                          username="msg://loginForm.errorUsername"
-                          password="msg://loginForm.errorPassword"/>
-        </loginForm>
+    <layout justifyContent="CENTER" alignItems="CENTER" width="100%" height="100%" padding="false">
+        <hbox width="100%" height="100%" css="display:flex; flex-wrap: nowrap; align-content: center; justify-content: center;">
+            <vbox justifyContent="CENTER" alignItems="CENTER" width="30%" minWidth="400px">
+                <loginForm id="login"
+                           rememberMeVisible="true"
+                           forgotPasswordButtonVisible="false">
+                    <form title="msg://loginForm.headerTitle"
+                          username="msg://loginForm.username"
+                          password="msg://loginForm.password"
+                          rememberMe="msg://loginForm.rememberMe"
+                          submit="msg://loginForm.submit"
+                          forgotPassword="msg://loginForm.forgotPassword"/>
+                    <errorMessage title="msg://loginForm.errorTitle"
+                                  message="msg://loginForm.badCredentials"
+                                  username="msg://loginForm.errorUsername"
+                                  password="msg://loginForm.errorPassword"/>
+                </loginForm>
+                <button id="registrationBtn" text="msg://registrationBtn.text"/>
+            </vbox>
+            <vbox alignItems="CENTER" justifyContent="CENTER" classNames="loginCover" width="70%" height="100%"/>
+        </hbox>
     </layout>
 </view>

@@ -102,3 +102,30 @@
     margin-inline-end: 0;
     font-size: 13px;
 }
+
+.registration-form-layout {
+    padding: var(--lumo-space-l);
+    background: var(--lumo-base-color) linear-gradient(--lumo-tint-5pct), var(--lumo-tint-5pct);
+}
+
+.loginCover {
+    background-image: url(https://btdconstruct.ro/wp-content/uploads/2023/07/architect-working-with-virtual-3d-projection-scaled.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+@media (max-width: 1587px) {
+    .loginCover {
+        display: none;
+    }
+}
+
+hr {
+    display: block;
+    align-self: stretch;
+    height: 2px;
+    border: 0;
+    padding: 0;
+    margin: var(--lumo-space-s) calc(var(--lumo-border-radius-m) / 2);
+    background-color: var(--lumo-contrast-10pct);
+}

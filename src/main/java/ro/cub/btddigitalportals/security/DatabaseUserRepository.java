@@ -27,5 +27,10 @@ public class DatabaseUserRepository extends AbstractDatabaseUserRepository<User>
 
     @Override
     protected void initAnonymousUser(final User anonymousUser) {
+        Collection<GrantedAuthority> authorities = getGrantedAuthoritiesBuilder()
+                .addResourceRole(UiMinimalRole.CODE)
+                .addResourceRole(AnonymousRole.CODE)
+                .build();
+        anonymousUser.setAuthorities(authorities);
     }
 }

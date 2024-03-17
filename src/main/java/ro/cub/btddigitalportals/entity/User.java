@@ -8,9 +8,12 @@ import io.jmix.core.metamodel.annotation.DependsOnProperties;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.security.authentication.JmixUserDetails;
-import org.springframework.security.core.GrantedAuthority;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import org.springframework.security.core.GrantedAuthority;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
@@ -23,7 +26,7 @@ import java.util.UUID;
 public class User implements JmixUserDetails, HasTimeZone {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     @JmixGeneratedValue
     private UUID id;
 
@@ -39,12 +42,15 @@ public class User implements JmixUserDetails, HasTimeZone {
     @Column(name = "PASSWORD")
     protected String password;
 
-    @Column(name = "FIRST_NAME")
+    @NotNull
+    @Column(name = "FIRST_NAME", nullable = false)
     protected String firstName;
 
-    @Column(name = "LAST_NAME")
+    @NotNull
+    @Column(name = "LAST_NAME", nullable = false)
     protected String lastName;
 
+    @Pattern(message = "{msg://ro.cub.btddigitalportals.entity/User.email.validation.Pattern}", regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
     @Email
     @Column(name = "EMAIL")
     protected String email;
