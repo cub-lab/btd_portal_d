@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="cub">
+        <createTable tableName="CUB_CLIENT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CUB_CLIENT"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="${offsetDateTime.type}"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="${offsetDateTime.type}"/>
+            <column name="CLIENT_TYPE" type="VARCHAR(255)"/>
+            <column name="INDIVIDUAL_CLIENT_ID" type="UUID"/>
+            <column name="LEGAL_CLIENT_ID" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="cub">
+        <createTable tableName="CUB_INDIVIDUAL_CLIENT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CUB_INDIVIDUAL_CLIENT"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="${offsetDateTime.type}"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="${offsetDateTime.type}"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PHONE_NUMBER" type="VARCHAR(255)"/>
+            <column name="COMMUNICATION_CHANNEL" type="VARCHAR(255)"/>
+            <column name="ACCEPTED_TERMS_AND_CONDITIONS" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="cub">
+        <createTable tableName="CUB_LEGAL_CLIENT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CUB_LEGAL_CLIENT"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="${offsetDateTime.type}"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="${offsetDateTime.type}"/>
+            <column name="COMPANY" type="VARCHAR(500)"/>
+            <column name="NO_CHAMBER_OF_COMMERCE" type="VARCHAR(255)"/>
+            <column name="CIF_CUI" type="VARCHAR(255)"/>
+            <column name="COUNTY" type="VARCHAR(255)"/>
+            <column name="CONTACT_PHONE_NUMBER" type="VARCHAR(255)"/>
+            <column name="CONTACT_FAX_NUMBER" type="VARCHAR(255)"/>
+            <column name="COMMUNICATION_CHANNEL" type="VARCHAR(255)"/>
+            <column name="ACCEPTED_TERMS_AND_CONDITIONS" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="cub">
+        <addColumn tableName="CUB_USER">
+            <column name="CLIENT_ID" type="UUID"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="5" author="cub">
+        <createIndex indexName="IDX_CUB_CLIENT_INDIVIDUAL_CLIENT" tableName="CUB_CLIENT">
+            <column name="INDIVIDUAL_CLIENT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="INDIVIDUAL_CLIENT_ID" baseTableName="CUB_CLIENT"
+                                 constraintName="FK_CUB_CLIENT_ON_INDIVIDUAL_CLIENT" referencedColumnNames="ID"
+                                 referencedTableName="CUB_INDIVIDUAL_CLIENT"/>
+    </changeSet>
+    <changeSet id="6" author="cub">
+        <createIndex indexName="IDX_CUB_CLIENT_LEGAL_CLIENT" tableName="CUB_CLIENT">
+            <column name="LEGAL_CLIENT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="LEGAL_CLIENT_ID" baseTableName="CUB_CLIENT"
+                                 constraintName="FK_CUB_CLIENT_ON_LEGAL_CLIENT" referencedColumnNames="ID"
+                                 referencedTableName="CUB_LEGAL_CLIENT"/>
+    </changeSet>
+    <changeSet id="7" author="cub">
+        <createIndex indexName="IDX_CUB_USER_CLIENT" tableName="CUB_USER">
+            <column name="CLIENT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="CLIENT_ID" baseTableName="CUB_USER"
+                                 constraintName="FK_CUB_USER_ON_CLIENT" referencedColumnNames="ID"
+                                 referencedTableName="CUB_CLIENT"/>
+    </changeSet>
+    <changeSet id="8" author="cub">
+        <dropColumn columnName="accepted_terms_and_conditions" tableName="cub_user"/>
+
+        <dropColumn columnName="activation_code" tableName="cub_user"/>
+
+        <dropColumn columnName="created_by" tableName="cub_user"/>
+
+        <dropColumn columnName="created_date" tableName="cub_user"/>
+
+        <dropColumn columnName="dtype" tableName="cub_user"/>
+
+        <dropColumn columnName="last_modified_by" tableName="cub_user"/>
+
+        <dropColumn columnName="last_modified_date" tableName="cub_user"/>
+
+        <dropColumn columnName="phone" tableName="cub_user"/>
+
+        <dropColumn columnName="preferred_communication_channel" tableName="cub_user"/>
+
+        <dropColumn columnName="type_" tableName="cub_user"/>
+    </changeSet>
+</databaseChangeLog>

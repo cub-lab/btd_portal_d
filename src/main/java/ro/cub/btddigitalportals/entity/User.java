@@ -1,9 +1,12 @@
 package ro.cub.btddigitalportals.entity;
 
+import io.jmix.core.DeletePolicy;
 import io.jmix.core.HasTimeZone;
 import io.jmix.core.annotation.Secret;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
+import io.jmix.core.entity.annotation.OnDeleteInverse;
 import io.jmix.core.entity.annotation.SystemLevel;
+import io.jmix.core.metamodel.annotation.Composition;
 import io.jmix.core.metamodel.annotation.DependsOnProperties;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
@@ -11,7 +14,6 @@ import io.jmix.security.authentication.JmixUserDetails;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -21,7 +23,8 @@ import java.util.UUID;
 @JmixEntity
 @Entity(name = "cub_User")
 @Table(name = "CUB_USER", indexes = {
-        @Index(name = "IDX_CUB_USER_ON_USERNAME", columnList = "USERNAME", unique = true)
+        @Index(name = "IDX_CUB_USER_ON_USERNAME", columnList = "USERNAME", unique = true),
+        @Index(name = "IDX_CUB_USER_CLIENT", columnList = "CLIENT_ID")
 })
 public class User implements JmixUserDetails, HasTimeZone {
 
@@ -50,8 +53,7 @@ public class User implements JmixUserDetails, HasTimeZone {
     @Column(name = "LAST_NAME", nullable = false)
     protected String lastName;
 
-    @Pattern(message = "{msg://ro.cub.btddigitalportals.entity/User.email.validation.Pattern}", regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
-    @Email
+    @Email(message = "{msg://ro.cub.btddigitalportals.entity/User.email.validation.Email}", regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
     @Column(name = "EMAIL")
     protected String email;
 
@@ -61,8 +63,33 @@ public class User implements JmixUserDetails, HasTimeZone {
     @Column(name = "TIME_ZONE_ID")
     protected String timeZoneId;
 
+    @OnDeleteInverse(DeletePolicy.DENY)
+    @JoinColumn(name = "CLIENT_ID")
+    @Composition
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Client client;
+
+    @Column(name = "ACTIVATION_CODE")
+    private String activationCode;
+
     @Transient
     protected Collection<? extends GrantedAuthority> authorities;
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
     public UUID getId() {
         return id;

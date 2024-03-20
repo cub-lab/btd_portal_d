@@ -3,7 +3,21 @@
       title="msg://cerereRacordareHomeView.title">
     <layout>
         <div id="dashboardMainDiv" classNames="dashboardMainDiv">
-            <div id="dashboardCardDeck" classNames="card-deck"/>
+            <vbox id="firstStepVbox" width="100%" height="100%" justifyContent="CENTER" alignItems="CENTER">
+                <hbox id="infoHbox" minHeight="60px"
+                      css="background-color: rgb(198, 241, 247); border-radius: 10px;"
+                      spacing="true"
+                      margin="true"
+                      padding="true">
+                    <icon icon="vaadin:question-circle" color="rgb(80, 160, 222)"/>
+                    <span id="infoTextWithIconSpan" text="msg://firstStep.status.info" css="font-size: 17px; font-weight: 600"/>
+                </hbox>
+                <radioButtonGroup id="firstStepOptionsRadioGroup" height="70px"
+                                  themeNames="vertical" css="margin-bottom: 30px;font-size: 17px; font-weight: 500"/>
+                <button id="moveNext" text="msg://moveForward.button.text"
+                    classNames="moveNextBtn" iconAfterText="true" icon="lumo:angle-right" themeNames="primary"
+                        disableOnClick="true" enabled="false"/>
+            </vbox>
         </div>
     </layout>
 </view>

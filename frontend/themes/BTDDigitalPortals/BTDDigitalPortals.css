@@ -12,13 +12,15 @@
 @media (min-width: 576px)
 .dashboardMainDiv {
     padding: 1.5rem;
-    margin-right: 0;
-    margin-left: 0;
+    margin: auto;
+    margin-top: 10px;
     border-width: 0.2rem;
 }
 
 .dashboardMainDiv {
     position: relative;
+    margin: auto;
+    margin-top: 10px;
 }
 
 .dashboardMainDiv::after {
@@ -128,4 +130,20 @@ hr {
     padding: 0;
     margin: var(--lumo-space-s) calc(var(--lumo-border-radius-m) / 2);
     background-color: var(--lumo-contrast-10pct);
+}
+
+vaadin-radio-button {
+    margin: 10px 0 10px 0;
+}
+
+.moveNextBtn {
+    background: #035cb5;
+    color: white;
+    font-weight: 600;
+    line-height: 16px;
+    margin: 0;
+    text-decoration: none;
+    text-transform: none;
+    padding: 8px 18px;
+    border-radius: 4px;
 }

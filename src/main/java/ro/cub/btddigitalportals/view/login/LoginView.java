@@ -7,6 +7,7 @@ import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.i18n.LocaleChangeEvent;
 import com.vaadin.flow.i18n.LocaleChangeObserver;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteParameters;
 import com.vaadin.flow.server.VaadinSession;
 import io.jmix.core.CoreProperties;
 import io.jmix.core.MessageTools;
@@ -138,6 +139,5 @@ public class LoginView extends StandardView implements LocaleChangeObserver {
     public void onRegistrationBtnClick(final ClickEvent<JmixButton> event) {
         viewNavigators.view(RegistrationView.class).navigate();
     }
-
 
 }

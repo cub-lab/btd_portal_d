@@ -1,13 +1,11 @@
 package ro.cub.btddigitalportals.service;
 
+import com.nimbusds.jose.util.Base64;
 import io.jmix.core.UnconstrainedDataManager;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import ro.cub.btddigitalportals.entity.ClientExtUser;
-import ro.cub.btddigitalportals.entity.ClientType;
-import ro.cub.btddigitalportals.entity.CommunicationChannel;
+import ro.cub.btddigitalportals.entity.*;
 
 import java.util.Optional;
 
@@ -23,37 +21,35 @@ public class ClientRegistrationService  {
     }
 
     public boolean emailAlreadyRegistered(String email) {
-        Optional<ClientExtUser> optional = unconstrainedDataManager.load(ClientExtUser.class)
-                .query("select c from cub_ClientExtUser c where c.email = :email")
+        Optional<User> optional = unconstrainedDataManager.load(User.class)
+                .query("select c from cub_User c where c.email = :email")
                 .parameter("email", email)
                 .optional();
 
         return optional.isPresent();
     }
 
-    public String registerNewUser(ClientType clientType,
-                                  String firstName,
-                                  String lastName,
-                                  String email,
-                                  String password,
-                                  String phoneNumber,
-                                  Boolean acceptedTermsAndConditions,
-                                  CommunicationChannel communicationChannel) {
+    public String registerNewClient(String providedEmail, String providedPassword, Client clientToRegister) {
         String randomString = RandomStringUtils.randomAlphabetic(10, 40);
-        ClientExtUser clientExtUser = unconstrainedDataManager.create(ClientExtUser.class);
-        clientExtUser.setType(clientType);
-        clientExtUser.setFirstName(firstName);
-        clientExtUser.setLastName(lastName);
-        clientExtUser.setEmail(email);
-        clientExtUser.setUsername(email);
-        clientExtUser.setPassword(passwordEncoder.encode(password));
-        clientExtUser.setPhone(phoneNumber);
-        clientExtUser.setPreferredCommunicationChannel(communicationChannel);
-        clientExtUser.setActive(false);
-        clientExtUser.setActivationCode(Base64.encodeBase64String(randomString.getBytes()));
-        // save new user to the database
-        unconstrainedDataManager.save(clientExtUser);
+        User newUser = unconstrainedDataManager.create(User.class);
+        newUser.setUsername(providedEmail);
+        newUser.setPassword(passwordEncoder.encode(providedPassword));
+        switch (clientToRegister.getClientType()) {
+            case INDIVIDUAL -> {
+                newUser.setFirstName(clientToRegister.getIndividualClient().getFirstName());
+                newUser.setLastName(clientToRegister.getIndividualClient().getLastName());
+            }
+            case LEGAL_ENTITY -> {
+                newUser.setFirstName(clientToRegister.getLegalClient().getContactFirstName());
+                newUser.setLastName(clientToRegister.getLegalClient().getContactLastName());
+            }
+        }
+        newUser.setClient(clientToRegister);
+        newUser.setActivationCode(randomString);
+        newUser.setActive(false);
 
-        return clientExtUser.getActivationCode();
+        unconstrainedDataManager.save(newUser);
+
+        return randomString;
     }
 }

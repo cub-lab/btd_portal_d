@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class TemplateUtils {
 
-    public static String makeActivationEmail(String firstName, String lastName, String activationLink) {
+    public static String makeActivationEmail(String firstName, String lastName, String activationLink, String languageTag) {
         Configuration configuration = new Configuration();
         configuration.setDefaultEncoding("UTF-8");
         configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
@@ -24,7 +24,8 @@ public class TemplateUtils {
         configuration.setClassForTemplateLoading(BTDDigitalPortalsApplication.class, "/");
 
         try {
-            Template template = configuration.getTemplate("ro/cub/btddigitalportals/email/account-activation-en.ftl");
+            Template template =
+                    configuration.getTemplate("ro/cub/btddigitalportals/email/account-activation-" + languageTag + ".ftl");
             Map<String, String> params = new HashMap<>();
             params.put("firstName", firstName);
             params.put("lastName", lastName);

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://accountActivationView.title">
+    <layout justifyContent="CENTER" alignItems="CENTER">
+        <div id="accountActivated" alignSelf="CENTER">
+            <h2 id="activationMessage" width="100%" alignSelf="CENTER"/>
+            <button id="gotoLogin" width="200px"/>
+        </div>
+    </layout>
+</view>

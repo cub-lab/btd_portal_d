@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <view xmlns="http://jmix.io/schema/flowui/view"
       title="msg://registrationView.title">
-    <layout justifyContent="START" alignItems="CENTER">
-        <header id="header" classNames="jmix-main-view-header" height="60px" width="100%" css="background-color: white; margin: 0px; padding:1px;">
+
+    <layout justifyContent="START" alignItems="CENTER" height="AUTO">
+        <header id="header" classNames="jmix-main-view-header" width="100%" css="background-color: white; margin: 0px; padding:1px;">
             <hbox themeNames="spacing-l" width="100%">
                 <image resource="https://btdconstruct.ro/wp-content/uploads/2019/04/logo-btd.png" themeNames="scale-down" css="width: 110px;"/>
                 <div text="msg://ro.cub.btddigitalportals.view.portaldistribmain/ExtPortalDistribMainView.title" themeNames="primary"
                      css="font-size: 26px; font-style: normal; font-weight: 600; padding-left: 10px; color: gray; padding-top: 18px;">
                 </div>
-                <hr/>
             </hbox>
         </header>
         <hr/>
@@ -18,40 +18,41 @@
             <h2 text="msg://registrationHeader.text"/>
             <details opened="true" themeNames="small reverse"
                      summaryText="msg://legalAccountData.summaryText" width="100%">
-                <formLayout>
+                <formLayout id="accountDetailsForm">
                     <responsiveSteps>
                         <responsiveStep minWidth="200px" columns="2"/>
                     </responsiveSteps>
-                    <textField id="emailField" label="msg://emailField.title" clearButtonVisible="true"/>
-                    <textField id="confirmEmailField" label="msg://confirmEmailField.title" clearButtonVisible="true"/>
-                    <passwordField id="passwordField" label="msg://passwordField.title" clearButtonVisible="true"/>
+                    <textField id="emailField" label="msg://emailField.title" clearButtonVisible="true" />
+                    <textField id="confirmEmailField" label="msg://confirmEmailField.title" clearButtonVisible="true" />
+                    <passwordField id="passwordField" label="msg://passwordField.title" clearButtonVisible="true"
+                                   helperText="msg://password.requirements"/>
                     <passwordField id="confirmPasswordField" label="msg://confirmPasswordField.title" clearButtonVisible="true"/>
                 </formLayout>
             </details>
             <radioButtonGroup id="clientType" itemsEnum="ro.cub.btddigitalportals.entity.ClientType" />
             <div id="individualClientDiv" visible="true" width="100%">
-                <formLayout>
+                <formLayout id="individualDetailsForm">
                     <responsiveSteps>
                         <responsiveStep minWidth="200px" columns="2"/>
                     </responsiveSteps>
-                    <textField id="firstNameField" label="msg://firstNameField.title" clearButtonVisible="true" />
-                    <textField id="lastNameField" label="msg://lastNameField.title" clearButtonVisible="true"/>
-                    <textField id="phoneNumberField" label="msg://phoneNumberField.title" clearButtonVisible="true" value="+40" colspan="2"/>
-                    <radioButtonGroup id="communicationChannelField" label="msg://communicationChannelField.label"
+                    <textField id="individualFirstNameField" label="msg://firstNameField.title" clearButtonVisible="true"  />
+                    <textField id="individualLastNameField" label="msg://lastNameField.title" clearButtonVisible="true" />
+                    <textField id="individualPhoneNumberField" label="msg://phoneNumberField.title" clearButtonVisible="true" value="+40" colspan="2"/>
+                    <radioButtonGroup id="individualCommunicationChannelField" label="msg://communicationChannelField.label"
                                       itemsEnum="ro.cub.btddigitalportals.entity.CommunicationChannel" colspan="2"/>
                 </formLayout>
             </div>
             <div id="legalClientDiv" visible="false" width="100%">
                 <details opened="true" themeNames="small reverse" summaryText="msg://legalClientIdentificationDetails.summaryText"
                          width="100%">
-                    <formLayout>
+                    <formLayout id="legalDetailsForm">
                         <responsiveSteps>
                             <responsiveStep minWidth="200px" columns="2"/>
                         </responsiveSteps>
-                        <textField id="companyNameField" label="msg://companyNameField.label" clearButtonVisible="true"/>
+                        <textField id="companyNameField" label="msg://companyNameField.label" clearButtonVisible="true" />
                         <textField id="chamberOfCommerceRegNumberField" label="msg://chamberOfCommerceRegNumberField.label"
-                                   clearButtonVisible="true"/>
-                        <textField id="cifCuiField" label="msg://cifcuiField.label" clearButtonVisible="true"/>
+                                   clearButtonVisible="true" />
+                        <textField id="cifCuiField" label="msg://cifcuiField.label" clearButtonVisible="true" />
                         <comboBox id="countyField" label="msg://countyField.label" />
                     </formLayout>
                 </details>
@@ -62,24 +63,26 @@
                         <responsiveSteps>
                             <responsiveStep minWidth="200px" columns="2"/>
                         </responsiveSteps>
-                        <textField id="contactFirstNameField" label="msg://contactFirstNameField.label" clearButtonVisible="true"/>
-                        <textField id="contactLastNameField" label="msg://contactLastNameField.label" clearButtonVisible="true"/>
+                        <textField id="contactFirstNameField" label="msg://contactFirstNameField.label" clearButtonVisible="true" />
+                        <textField id="contactLastNameField" label="msg://contactLastNameField.label" clearButtonVisible="true" />
                         <textField id="contactPhoneNumberField" label="msg://contactPhoneNumberField.label"
-                                   clearButtonVisible="true" value="+40"/>
+                                   clearButtonVisible="true" value="+40" />
                         <textField id="contactFaxNumberField" label="msg://contactFaxNumberField.label"
                                    clearButtonVisible="true" />
                     </formLayout>
                 </details>
                 <details opened="true" themeNames="small reverse"
                          summaryText="msg://legalCommunicationChannel.summaryText" width="100%">
-                    <radioButtonGroup itemsEnum="ro.cub.btddigitalportals.entity.CommunicationChannel" colspan="2"/>
+                    <formLayout>
+                        <radioButtonGroup id="legalCommunicationChannelField" itemsEnum="ro.cub.btddigitalportals.entity.CommunicationChannel" colspan="2"/>
+                    </formLayout>
                 </details>
             </div>
             <hbox alignItems="CENTER" justifyContent="START" spacing="false" padding="false">
                 <checkbox id="termsAndConditionsCheckbox" label="msg://termsAndConditionsField.label" value="false"/>
                 <anchor href="https://btdconstruct.ro/politica-de-confidentialitate/" target="BLANK" text="msg://termsAndConditionsAnchor.text"/>
             </hbox>
-            <button id="registerBtn" text="msg://registerBtn.text" themeNames="primary" />
+            <button id="registerBtn" text="msg://registerBtn.text" themeNames="primary" enabled="false" />
             <button id="alreadyRegisteredBtn" text="msg://alreadyRegisteredBtn.text" themeNames="tertiary small"/>
         </vbox>
     </layout>
