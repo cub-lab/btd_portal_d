@@ -2,8 +2,31 @@
 <view xmlns="http://jmix.io/schema/flowui/view"
       title="msg://noGaspipeView.title">
     <layout>
-        <div id="dashboardMainDiv" classNames="dashboardMainDiv">
-            <div id="dashboardCardDeck" classNames="card-deck"/>
-        </div>
+        <h2 id="optionTitle"/>
+        <hbox width="100%" spacing="true" margin="true" padding="true">
+            <accordion width="100%">
+                <accordionPanel themeNames="filled reverse" summaryText="msg://personalInfo.summaryText">
+
+                </accordionPanel>
+                <accordionPanel themeNames="filled reverse" summaryText="msg://clientType.summaryText">
+
+                </accordionPanel>
+                <accordionPanel themeNames="filled reverse" summaryText="msg://clc.summaryText">
+
+                </accordionPanel>
+                <accordionPanel themeNames="filled reverse" summaryText="msg://executionEntity.summaryText">
+
+                </accordionPanel>
+                <accordionPanel themeNames="filled reverse" summaryText="msg://devices.summaryText">
+
+                </accordionPanel>
+                <accordionPanel themeNames="filled reverse" summaryText="msg://clcFieldInfo.summaryText">
+
+                </accordionPanel>
+                <accordionPanel themeNames="filled reverse" summaryText="msg://attachments.summaryText">
+
+                </accordionPanel>
+            </accordion>
+        </hbox>
     </layout>
 </view>

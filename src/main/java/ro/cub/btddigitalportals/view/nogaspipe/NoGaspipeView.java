@@ -1,87 +1,50 @@
 package ro.cub.btddigitalportals.view.nogaspipe;
 
 
-import com.vaadin.flow.component.html.Anchor;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H4;
-import com.vaadin.flow.component.html.Paragraph;
-import io.jmix.flowui.UiComponents;
+import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.router.QueryParameters;
+import io.jmix.core.Messages;
 import io.jmix.flowui.view.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import ro.cub.btddigitalportals.entity.CategorieCerereRacordareEnum;
 import ro.cub.btddigitalportals.view.portaldistribmain.ExtPortalDistribMainView;
-
 import com.vaadin.flow.router.Route;
+
+import java.util.Optional;
 
 @Route(value = "no-gaspipe", layout = ExtPortalDistribMainView.class)
 @ViewController("cub_NoGaspipeView")
 @ViewDescriptor("no-gaspipe-view.xml")
 public class NoGaspipeView extends StandardView {
+    private static final String INSTALATIE_RACORDARE_CONDUCTA_EXISTENTA = "rirce";
+    private static final String PRELUNGIRE_CONDUCTA_REALIZARE_INSTALATIE_RACORDARE  = "pcrir";
+    private String userSelectedOption;
     @ViewComponent
-    private Div dashboardCardDeck;
+    private H2 optionTitle;
     @Autowired
-    private UiComponents uiComponents;
-    @Autowired
-    private MessageBundle messageBundle;
+    private Messages messages;
 
     @Subscribe
-    public void onInit(final InitEvent event) {
-        // create a card
-        Div realizareInstalatieRacordareDinConductaExistenta = uiComponents.create(Div.class);
-        realizareInstalatieRacordareDinConductaExistenta.setClassName("card bg-light mb-3");
-        realizareInstalatieRacordareDinConductaExistenta.setWidth("30rem");
-        realizareInstalatieRacordareDinConductaExistenta.add(getCardBody(CategorieCerereRacordareEnum.INSTALATIE_RACORDARE_CONDUCTA_EXISTENTA));
-        // add the card to the card deck
-        dashboardCardDeck.add(realizareInstalatieRacordareDinConductaExistenta);
-
-        // create a card
-        Div prelungireConductaRealizareInstalatieRacordare = uiComponents.create(Div.class);
-        prelungireConductaRealizareInstalatieRacordare.setClassName("card bg-light mb-3");
-        prelungireConductaRealizareInstalatieRacordare.setWidth("30rem");
-        prelungireConductaRealizareInstalatieRacordare.add(getCardBody(CategorieCerereRacordareEnum.PRELUNGIRE_CONDUCTA_REALIZARE_INSTALATIE_RACORDARE));
-        // add the card to the card deck
-        dashboardCardDeck.add(prelungireConductaRealizareInstalatieRacordare);
+    public void onBeforeShow(final BeforeShowEvent event) {
+        if(this.userSelectedOption.equalsIgnoreCase(INSTALATIE_RACORDARE_CONDUCTA_EXISTENTA)) {
+            optionTitle.setText(messages.getMessage("ro.cub.btddigitalportals.view.cerereracordarehome/instalatie_racordare_conducta_existenta.title"));
+        } else if(this.userSelectedOption.equalsIgnoreCase(PRELUNGIRE_CONDUCTA_REALIZARE_INSTALATIE_RACORDARE)) {
+            optionTitle.setText(messages.getMessage("ro.cub.btddigitalportals.view.cerereracordarehome/prelungire_conducta_realizare_instalatie_racordare.title"));
+        }
     }
 
-    private Div getCardBody(CategorieCerereRacordareEnum reportIndex) {
-        Div cardBody = uiComponents.create(Div.class);
-        cardBody.setClassName("card-body");
-        H4 cardTitle = uiComponents.create(H4.class);
-        cardTitle.setClassName("card-title");
+    @Subscribe
+    public void onQueryParametersChange(final QueryParametersChangeEvent event) {
+        QueryParameters queryParameters = event.getQueryParameters();
+        Optional<String> opt = queryParameters.getSingleParameter("opt");
 
-        switch (reportIndex) {
-            case INSTALATIE_RACORDARE_CONDUCTA_EXISTENTA -> {
-                cardTitle.setText(messageBundle.getMessage("instalatie_racordare_conducta_existenta.title"));
-                Paragraph cardDescription = uiComponents.create(Paragraph.class);
-                cardDescription.setClassName("card-text");
-                cardDescription.setText(messageBundle.getMessage("instalatie_racordare_conducta_existenta.description"));
-                Anchor cardAction = uiComponents.create(Anchor.class);
-                cardAction.setClassName("btn btn-primary");
-                cardAction.setText(messageBundle.getMessage("startFlow.title"));
-                cardAction.setHref("#");
-
-                cardBody.add(cardTitle);
-                cardBody.add(cardDescription);
-                cardBody.add(cardAction);
-            }
-
-            case PRELUNGIRE_CONDUCTA_REALIZARE_INSTALATIE_RACORDARE -> {
-                cardTitle.setText(messageBundle.getMessage("prelungire_conducta_realizare_instalatie_racordare.title"));
-                Paragraph cardDescription = uiComponents.create(Paragraph.class);
-                cardDescription.setClassName("card-text");
-                cardDescription.setText(messageBundle.getMessage("prelungire_conducta_realizare_instalatie_racordare.description"));
-                Anchor cardAction = uiComponents.create(Anchor.class);
-                cardAction.setClassName("btn btn-primary");
-                cardAction.setText(messageBundle.getMessage("startFlow.title"));
-                cardAction.setHref("#");
-
-                cardBody.add(cardTitle);
-                cardBody.add(cardDescription);
-                cardBody.add(cardAction);
-            }
+        // defaults to INSTALATIE_RACORDARE_CONDUCTA_EXISTENTA to avoid issues when the user
+        // is making changes to request parameters
+        if(opt.isEmpty()) {
+            userSelectedOption = INSTALATIE_RACORDARE_CONDUCTA_EXISTENTA;
+            return;
         }
-
-        return cardBody;
+        // save user selection
+        this.userSelectedOption = opt.get();
     }
 
 }

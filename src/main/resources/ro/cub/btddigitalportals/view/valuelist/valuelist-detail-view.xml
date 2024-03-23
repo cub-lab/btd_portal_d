@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://valuelistDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="valuelistDc"
+                  class="ro.cub.btddigitalportals.entity.Valuelist">
+            <fetchPlan extends="_base">
+                <property name="entries" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader/>
+            <collection id="entriesDc" property="entries"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="valuelistDc">
+            <textField id="nameField" property="name"/>
+            <checkbox id="activeField" property="active"/>
+        </formLayout>
+        <h4 text="msg://ro.cub.btddigitalportals.entity/Valuelist.entries"/>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button action="entriesDataGrid.create"/>
+            <button action="entriesDataGrid.edit"/>
+            <button action="entriesDataGrid.remove"/>
+        </hbox>
+        <dataGrid id="entriesDataGrid"
+                  dataContainer="entriesDc"
+                  width="100%"
+                  minHeight="20em"
+                  columnReorderingAllowed="true">
+            <actions>
+                <action id="create" type="list_create">
+                    <properties>
+                        <property name="openMode" value="DIALOG"/>
+                    </properties>
+                </action>
+                <action id="edit" type="list_edit">
+                    <properties>
+                        <property name="openMode" value="DIALOG"/>
+                    </properties>
+                </action>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns>
+                <column property="position"/>
+                <column property="code"/>
+                <column property="name"/>
+                <column property="active"/>
+            </columns>
+        </dataGrid>
+        <hbox id="detailActions">
+            <button id="saveAndCloseBtn" action="saveAction"/>
+            <button id="closeBtn" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

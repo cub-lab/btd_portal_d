@@ -49,7 +49,7 @@ public class ValuelistEntry {
     private String code;
 
     @Column(name = "POSITION_")
-    private String position;
+    private Integer position;
 
     @OnDeleteInverse(DeletePolicy.CASCADE)
     @JoinColumn(name = "VALUELIST_ID", nullable = false)
@@ -58,6 +58,14 @@ public class ValuelistEntry {
 
     @Column(name = "ACTIVE")
     private Boolean active;
+
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
 
     public Boolean getActive() {
         return active;
@@ -81,14 +89,6 @@ public class ValuelistEntry {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
     }
 
     public String getName() {
