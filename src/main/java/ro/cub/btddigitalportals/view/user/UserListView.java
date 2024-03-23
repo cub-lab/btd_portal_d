@@ -6,7 +6,7 @@ import com.vaadin.flow.router.Route;
 import io.jmix.flowui.view.*;
 import ro.cub.btddigitalportals.view.portaldistribmain.ExtPortalDistribMainView;
 
-@Route(value = "users", layout = ExtPortalDistribMainView.class)
+@Route(value = "users", layout = MainView.class)
 @ViewController("cub_User.list")
 @ViewDescriptor("user-list-view.xml")
 @LookupComponent("usersDataGrid")

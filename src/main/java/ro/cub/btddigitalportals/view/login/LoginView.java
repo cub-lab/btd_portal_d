@@ -12,6 +12,7 @@ import com.vaadin.flow.server.VaadinSession;
 import io.jmix.core.CoreProperties;
 import io.jmix.core.MessageTools;
 import io.jmix.core.security.AccessDeniedException;
+import io.jmix.core.security.CurrentAuthentication;
 import io.jmix.flowui.ViewNavigators;
 import io.jmix.flowui.component.loginform.JmixLoginForm;
 import io.jmix.flowui.kit.component.ComponentUtils;
@@ -25,12 +26,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import ro.cub.btddigitalportals.security.ClientRole;
 import ro.cub.btddigitalportals.view.registration.RegistrationView;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -66,6 +72,8 @@ public class LoginView extends StandardView implements LocaleChangeObserver {
     private ViewNavigators viewNavigators;
     @ViewComponent
     private JmixButton registrationBtn;
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @Subscribe
     public void onInit(final InitEvent event) {
@@ -101,6 +109,16 @@ public class LoginView extends StandardView implements LocaleChangeObserver {
                             .withLocale(login.getSelectedLocale())
                             .withRememberMe(login.isRememberMe())
             );
+
+            CurrentAuthentication currentAuthentication = applicationContext.getBean(CurrentAuthentication.class);
+            Authentication authentication = currentAuthentication.getAuthentication();
+            List<String> userRoles = authentication.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .toList();
+            // clients must land on specific page
+            if(userRoles.contains("ROLE_" + ClientRole.CODE)) {
+                viewNavigators.view("cub_CerereRacordareHomeView").navigate();
+            }
         } catch (final BadCredentialsException | DisabledException | LockedException | AccessDeniedException e) {
             log.warn("Login failed for user '{}': {}", event.getUsername(), e.toString());
             event.getSource().setError(true);

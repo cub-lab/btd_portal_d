@@ -13,7 +13,7 @@ import ro.cub.btddigitalportals.entity.CerereRacordareGaze;
 public interface ClientRole {
     String CODE = "client-access-role";
 
-    @ViewPolicy(viewIds = {"cub_CerereRacordareHomeView", "cub_NoGaspipeView"})
+    @ViewPolicy(viewIds = {"cub_CerereRacordareHomeView", "cub_NoGaspipeView", "cub_PortalDistribView"})
     void screens();
 
     @EntityAttributePolicy(entityClass = CerereRacordareGaze.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)

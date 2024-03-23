@@ -14,9 +14,8 @@
                 </hbox>
                 <radioButtonGroup id="firstStepOptionsRadioGroup" height="70px"
                                   themeNames="vertical" css="margin-bottom: 30px;font-size: 17px; font-weight: 500"/>
-                <button id="moveNext" text="msg://moveForward.button.text"
-                    classNames="moveNextBtn" iconAfterText="true" icon="lumo:angle-right" themeNames="primary"
-                        disableOnClick="true" enabled="false"/>
+                <div id="noGasDashboardCardDeck" classNames="card-deck" visible="false"/>
+                <div id="withGasDashboardCardDeck" classNames="card-deck" visible="false"/>
             </vbox>
         </div>
     </layout>
