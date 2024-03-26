@@ -56,6 +56,8 @@ dependencies {
     // https://mvnrepository.com/artifact/org.freemarker/freemarker
     implementation 'org.freemarker:freemarker:2.3.32'
 
+    implementation 'io.jmix.localfs:jmix-localfs-starter'
+
 }
 
 test {

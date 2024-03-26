@@ -161,7 +161,7 @@ public class CerereRacordareHomeView extends StandardView {
                 Anchor cardAction = uiComponents.create(Anchor.class);
                 cardAction.setClassName("btn btn-primary");
                 cardAction.setText(messageBundle.getMessage("startFlow.title"));
-                cardAction.setHref("no-gaspipe?opt=rirce");
+                cardAction.setHref("no-gaspipe/new?opt=rirce");
 
                 cardBody.add(cardTitle);
                 cardBody.add(cardDescription);
@@ -176,7 +176,7 @@ public class CerereRacordareHomeView extends StandardView {
                 Anchor cardAction = uiComponents.create(Anchor.class);
                 cardAction.setClassName("btn btn-primary");
                 cardAction.setText(messageBundle.getMessage("startFlow.title"));
-                cardAction.setHref("no-gaspipe?opt=pcrir");
+                cardAction.setHref("no-gaspipe/new?opt=pcrir");
 
                 cardBody.add(cardTitle);
                 cardBody.add(cardDescription);

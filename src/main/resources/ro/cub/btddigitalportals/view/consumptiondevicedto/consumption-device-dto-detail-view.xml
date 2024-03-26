@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://consumptionDeviceDTODetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="consumptionDeviceDTODc"
+                  class="ro.cub.btddigitalportals.entity.ConsumptionDeviceDTO">
+            <loader id="consumptionDeviceDTODl"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="consumptionDeviceDTODc">
+            <textField id="nameField" property="name"/>
+            <textField id="numberOfUserDevicesField" property="numberOfUserDevices"/>
+            <textField id="consumptionRateField" property="consumptionRate"/>
+            <select id="typeField" property="type"/>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseBtn" action="saveAction"/>
+            <button id="closeBtn" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

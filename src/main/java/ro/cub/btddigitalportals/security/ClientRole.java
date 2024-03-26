@@ -7,7 +7,7 @@ import io.jmix.security.role.annotation.EntityPolicy;
 import io.jmix.security.role.annotation.ResourceRole;
 import io.jmix.security.role.annotation.SpecificPolicy;
 import io.jmix.securityflowui.role.annotation.ViewPolicy;
-import ro.cub.btddigitalportals.entity.CerereRacordareGaze;
+import ro.cub.btddigitalportals.entity.*;
 
 @ResourceRole(name = "Client Access", code = ClientRole.CODE)
 public interface ClientRole {
@@ -22,4 +22,36 @@ public interface ClientRole {
 
     @SpecificPolicy(resources = "ui.loginToUi")
     void specific();
+
+    @EntityAttributePolicy(entityClass = ConnectionRequest.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
+    @EntityPolicy(entityClass = ConnectionRequest.class, actions = {EntityPolicyAction.READ, EntityPolicyAction.UPDATE, EntityPolicyAction.CREATE})
+    void connectionRequest();
+
+    @EntityAttributePolicy(entityClass = ConsumptionDeviceDTO.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
+    @EntityPolicy(entityClass = ConsumptionDeviceDTO.class, actions = EntityPolicyAction.ALL)
+    void consumptionDeviceDTO();
+
+    @EntityAttributePolicy(entityClass = FrequentDevice.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
+    @EntityPolicy(entityClass = FrequentDevice.class, actions = EntityPolicyAction.READ)
+    void frequentDevice();
+
+    @EntityAttributePolicy(entityClass = IndividualClient.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
+    @EntityPolicy(entityClass = IndividualClient.class, actions = EntityPolicyAction.READ)
+    void individualClient();
+
+    @EntityAttributePolicy(entityClass = LegalClient.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
+    @EntityPolicy(entityClass = LegalClient.class, actions = EntityPolicyAction.READ)
+    void legalClient();
+
+    @EntityAttributePolicy(entityClass = ValuelistEntry.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
+    @EntityPolicy(entityClass = ValuelistEntry.class, actions = EntityPolicyAction.READ)
+    void valuelistEntry();
+
+    @EntityAttributePolicy(entityClass = Valuelist.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
+    @EntityPolicy(entityClass = Valuelist.class, actions = EntityPolicyAction.READ)
+    void valuelist();
+
+    @EntityAttributePolicy(entityClass = ConsumptionDevice.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
+    @EntityPolicy(entityClass = ConsumptionDevice.class, actions = EntityPolicyAction.READ)
+    void consumptionDevice();
 }

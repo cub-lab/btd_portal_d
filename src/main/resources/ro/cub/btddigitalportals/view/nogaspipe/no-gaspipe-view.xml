@@ -1,30 +1,216 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <view xmlns="http://jmix.io/schema/flowui/view"
       title="msg://noGaspipeView.title">
+    <data>
+        <instance id="connectionRequestDc" class="ro.cub.btddigitalportals.entity.ConnectionRequest">
+            <loader id="connectionRequestDl"/>
+            <fetchPlan extends="_base">
+                <property name="client" fetchPlan="_base"/>
+            </fetchPlan>
+            <instance id="clientDc" property="client"/>
+        </instance>
+        <collection id="consumptionDeviceDToesDc"
+                    class="ro.cub.btddigitalportals.entity.ConsumptionDeviceDTO">
+            <loader id="consumptionDeviceDToesDl" />
+        </collection>
+        <collection id="customConsumptionDeviceDToesDc"
+                    class="ro.cub.btddigitalportals.entity.ConsumptionDeviceDTO">
+            <loader id="customConsumptionDeviceDToesDl" />
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
     <layout>
         <h2 id="optionTitle"/>
         <hbox width="100%" spacing="true" margin="true" padding="true">
-            <accordion width="100%">
-                <accordionPanel themeNames="filled reverse" summaryText="msg://personalInfo.summaryText">
-
+            <accordion id="accordion" width="100%">
+                <accordionPanel id="personalInfoPanel" themeNames="filled reverse" summaryText="msg://personalInfo.summaryText">
+                    <formLayout id="personalDetailsForm"/>
+                    <hbox padding="true" alignItems="END" justifyContent="END">
+                        <button id="moveForwardPersonalInfo" text="msg://moveForward.text" icon="ANGLE_RIGHT" iconAfterText="true" themeNames="primary success"/>
+                    </hbox>
                 </accordionPanel>
-                <accordionPanel themeNames="filled reverse" summaryText="msg://clientType.summaryText">
-
+                <accordionPanel id="clientTypePanel" themeNames="filled reverse" summaryText="msg://clientType.summaryText">
+                    <vbox width="100%" spacing="true">
+                        <hbox width="100%" spacing="true" justifyContent="START" alignItems="CENTER">
+                            <span text="msg://clietType.historical.text" width="200px" css="font-weight: 600"/>
+                            <radioButtonGroup id="clientTypeHistoricalRadioGroup" itemsEnum="ro.cub.btddigitalportals.entity.ClientTypeHistorical"
+                                        required="true"/>
+                        </hbox>
+                        <hbox width="100%" spacing="true" justifyContent="START" alignItems="CENTER">
+                            <span text="msg://clietType.text" width="200px" css="font-weight: 600"/>
+                            <radioButtonGroup id="clientTypeRadioGroup" itemsEnum="ro.cub.btddigitalportals.entity.ClientType"
+                                        required="true"/>
+                        </hbox>
+                        <hbox width="100%" padding="true" alignItems="END" justifyContent="END">
+                            <button id="moveForwardClientType" text="msg://moveForward.text" icon="ANGLE_RIGHT" iconAfterText="true" themeNames="primary success"/>
+                        </hbox>
+                    </vbox>
                 </accordionPanel>
-                <accordionPanel themeNames="filled reverse" summaryText="msg://clc.summaryText">
-
+                <accordionPanel id="clcAddressInfoPanel" themeNames="filled reverse" summaryText="msg://clc.summaryText">
+                    <vbox width="100%" spacing="true" margin="true">
+                        <formLayout id="clcDetailsForm">
+                            <comboBox id="clcCountyField" label="msg://clcCounty.label">
+                                <itemsQuery searchStringFormat="(?i)%${inputString}%"
+                                            escapeValueForLike="true">
+                                    <query>
+                                        <![CDATA[
+                                            select vle.name from cub_ValuelistEntry vle
+                                                where vle.active = 1
+                                                and vle.valuelist.active = 1 and vle.valuelist.name = 'Judete'
+                                                and vle.name like :searchString escape '\'
+                                            order by vle.position asc
+                                        ]]>
+                                    </query>
+                                </itemsQuery>
+                            </comboBox>
+                            <comboBox id="clcCityField" label="msg://clcCity.label"/>
+                            <comboBox id="clcArteryTypeField" label="msg://clcArteryType.label"/>
+                            <comboBox id="clcStreetField" label="msg://clcStreet.label"/>
+                            <textField id="clcStreetNoField" label="msg://clcStreetNo.label"/>
+                            <textField id="clcBuildingEntranceField" label="msg://clcBuildingEntrance.label"/>
+                            <integerField id="clcBuildingFloorField" label="msg://clcBuildingFloor.label"/>
+                            <textField id="clcBuildingApartmentField" label="msg://clcBuildingApartment.label"/>
+                            <textField id="clcPostalCodeField" label="msg://clcPostalCode.label"/>
+                        </formLayout>
+                        <checkbox id="informationCorrectValidation" label="msg://addressInfo.validation.label" classNames="btn-pulse"/>
+                        <hbox width="100%" padding="true" alignItems="END" justifyContent="END">
+                            <button id="moveForwardClcAddress" text="msg://moveForward.text" icon="ANGLE_RIGHT" iconAfterText="true" themeNames="primary success" enabled="false"/>
+                        </hbox>
+                    </vbox>
                 </accordionPanel>
-                <accordionPanel themeNames="filled reverse" summaryText="msg://executionEntity.summaryText">
-
+                <accordionPanel id="entityExecutingInfoPanel" themeNames="filled reverse" summaryText="msg://executionEntity.summaryText">
+                    <vbox width="100%" spacing="true" margin="true">
+                        <hbox width="100%" alignItems="CENTER" justifyContent="START">
+                            <image themeNames="scale-down" resource="images/pipe_execution.png" width="50px" />
+                            <span themeNames="contrast" text="msg://entityExecuting.description"
+                                        css="font-size: large; font-weight: 400" width="800px"/>
+                        </hbox>
+                        <radioButtonGroup id="entityExecutingRadioGroup"
+                                          itemsEnum="ro.cub.btddigitalportals.entity.EntityExecutingConnection"/>
+                        <hbox width="100%" padding="true" alignItems="END" justifyContent="END">
+                            <button id="moveForwardExecutingEntity" text="msg://moveForward.text" icon="ANGLE_RIGHT" iconAfterText="true" themeNames="primary"/>
+                        </hbox>
+                    </vbox>
                 </accordionPanel>
-                <accordionPanel themeNames="filled reverse" summaryText="msg://devices.summaryText">
-
+                <accordionPanel id="devicesPanel" themeNames="filled reverse" summaryText="msg://devices.summaryText">
+                    <details summaryText="msg://devicesPanel.frequent.header.text" opened="true">
+                        <dataGrid id="frequentDevicesDataGrid" dataContainer="consumptionDeviceDToesDc" selectionMode="MULTI" height="200px"
+                            themeNames="column-dividers wrap-cell-content column-borders">
+                            <columns sortable="false" resizable="true">
+                                <column header="msg://frequentDevices.type.header" property="name"/>
+                                <column header="msg://frequentDevices.no.header" property="numberOfUserDevices" editable="true"/>
+                                <column header="msg://frequentDevices.estimatedDebit.header" property="consumptionRate" editable="true"/>
+                                <editorActionsColumn>
+                                    <editButton text="msg://frequentDevices.editEntry.text" icon="PENCIL"/>
+                                    <closeButton text="msg://frequentDevices.closeEdit.text" icon="CLOSE"/>
+                                </editorActionsColumn>
+                            </columns>
+                        </dataGrid>
+                    </details>
+                    <details summaryText="msg://devicesPanel.custom.header.text" opened="true">
+                        <button id="addCustomDevice" text="msg://otherDevices.addBtn.text" icon="lumo:plus" themeNames="tertiary"/>
+                        <button id="removeDevice" text="msg://otherDevices.removeBtn.text" themeNames="tertiary" action="customDevicesDataGrid.remove"/>
+                        <dataGrid id="customDevicesDataGrid" dataContainer="customConsumptionDeviceDToesDc" selectionMode="SINGLE" height="200px"
+                                  themeNames="column-dividers wrap-cell-content column-borders" visible="false">
+                            <actions>
+                                <action id="remove" type="list_remove"/>
+                            </actions>
+                            <columns sortable="false" resizable="true">
+                                <column header="msg://frequentDevices.type.header" property="name" editable="true"/>
+                                <column header="msg://frequentDevices.no.header" property="numberOfUserDevices" editable="true"/>
+                                <column header="msg://frequentDevices.estimatedDebit.header" property="consumptionRate" editable="true"/>
+                                <editorActionsColumn>
+                                    <editButton text="msg://frequentDevices.editEntry.text" icon="PENCIL"/>
+                                    <closeButton text="msg://frequentDevices.closeEdit.text" icon="CLOSE"/>
+                                </editorActionsColumn>
+                            </columns>
+                        </dataGrid>
+                    </details>
+                    <hbox width="100%" justifyContent="START" alignItems="CENTER" spacing="true">
+                        <span text="msg://estimatedDebit.text" themeNames="primary" css="font-weight: 600"/>
+                        <span id="estimatedDebitValue" themeNames="primary" css="color: red;"/>
+                        <button id="computeEstimatedDebit" icon="vaadin:calc" themeNames="icon">
+                            <tooltip text="msg://computeEstimatedDebit.tooltip"/>
+                        </button>
+                    </hbox>
+                    <hbox width="100%" padding="true" alignItems="END" justifyContent="END">
+                        <button id="moveForwardDevices" text="msg://moveForward.text" icon="ANGLE_RIGHT" iconAfterText="true" themeNames="primary success"/>
+                    </hbox>
                 </accordionPanel>
-                <accordionPanel themeNames="filled reverse" summaryText="msg://clcFieldInfo.summaryText">
-
+                <accordionPanel id="clcTerrainInfoPanel" themeNames="filled reverse" summaryText="msg://clcFieldInfo.summaryText">
+                    <vbox width="100%" spacing="true" margin="true">
+                        <hbox width="100%" spacing="true">
+                            <image themeNames="scale-down" resource="images/question_map.png" width="30px" />
+                            <span themeNames="contrast" text="msg://existingPipeInFrontOfBuilding.description"
+                                  css="font-size: large; font-weight: 400" width="800px"/>
+                        </hbox>
+                        <radioButtonGroup id="clcNaturalGasPipeExistingRadioGroup"
+                                          itemsEnum="ro.cub.btddigitalportals.entity.QuestionOptionsExtended"
+                                          required="true" />
+                        <hbox width="100%" spacing="true">
+                            <image themeNames="scale-down" resource="images/question_map.png" width="30px" />
+                            <span themeNames="contrast" text="msg://existingGasProvisioningNeighbourhood.description"
+                                  css="font-size: large; font-weight: 400" width="800px"/>
+                        </hbox>
+                        <radioButtonGroup id="clcExistingGasProvisioningNeighbourhoodRadioGroup"
+                                          itemsEnum="ro.cub.btddigitalportals.entity.QuestionOptions"
+                                          required="true" />
+                        <hbox width="100%" spacing="true">
+                            <image themeNames="scale-down" resource="images/question_map.png" width="30px" />
+                            <span themeNames="contrast" text="msg://aproximatedLengths.description"
+                                  css="font-size: large; font-weight: 400" width="800px"/>
+                        </hbox>
+                        <hbox alignItems="CENTER" justifyContent="EVENLY">
+                            <vbox spacing="false" margin="false">
+                                <numberField id="streetL1Dimension" label="msg://clcStreetDimension.label"
+                                             placeholder="msg://clcStreetDimension.placeholder"/>
+                                <vbox spacing="false" margin="false" padding="false">
+                                    <span text="msg://sidewalkDimension.text"/>
+                                    <hbox spacing="true" padding="false" margin="false">
+                                        <numberField id="clcSidewalkDimL2" label="msg://clcSidewalkDimL2.label"
+                                                       placeholder="msg://clcSidewalkDimL2.placeholder"/>
+                                        <numberField id="clcSidewalkDimL4" label="msg://clcSidewalkDimL4.label"
+                                                       placeholder="msg://clcSidewalkDimL4.placeholder"/>
+                                    </hbox>
+                                    <span text="msg://greenSpaceDimension.text"/>
+                                    <hbox spacing="true" padding="false" margin="false">
+                                        <numberField id="clcGreenDimL3" label="msg://clcGreenDimL3.label"
+                                                     placeholder="msg://clcGreenDimL3.placeholder"/>
+                                        <numberField id="clcGreenDimL5" label="msg://clcGreenDimL5.label"
+                                                     placeholder="msg://clcGreenDimL5.placeholder"/>
+                                    </hbox>
+                                </vbox>
+                            </vbox>
+                            <image themeNames="scale-down" resource="images/terrainCategories.png"/>
+                        </hbox>
+                        <hbox width="100%" padding="true" alignItems="END" justifyContent="END">
+                            <button id="moveForwardClcTerrainInfo" text="msg://moveForward.text" icon="ANGLE_RIGHT" iconAfterText="true" themeNames="primary success"/>
+                        </hbox>
+                    </vbox>
                 </accordionPanel>
                 <accordionPanel themeNames="filled reverse" summaryText="msg://attachments.summaryText">
-
+                    <vbox width="100%" spacing="true" margin="true">
+                        <hbox width="100%" alignItems="CENTER" justifyContent="START">
+                            <span text="msg://identityDocument.text" css="font-weight: 600;"/>
+                            <upload id="uploadIdentityCard" receiverType="FILE_TEMPORARY_STORAGE_BUFFER"
+                                    dropAllowed="true"
+                                    autoUpload="true"
+                                    width="100%"
+                                    maxFiles="1"
+                                    css="border: 2px dotted hsl(192.07deg 78.06% 61.19% / 63%);"/>
+                        </hbox>
+                        <hbox width="100%" alignItems="CENTER" justifyContent="START">
+                            <span text="msg://statusPlanDocument.text" css="font-weight: 600;"/>
+                            <upload id="uploadStatusPlan" receiverType="FILE_TEMPORARY_STORAGE_BUFFER"
+                                    dropAllowed="true"
+                                    autoUpload="true"
+                                    width="100%"
+                                    maxFiles="1"
+                                    css="border: 2px dotted hsl(192.07deg 78.06% 61.19% / 63%);"/>
+                        </hbox>
+                    </vbox>
                 </accordionPanel>
             </accordion>
         </hbox>
