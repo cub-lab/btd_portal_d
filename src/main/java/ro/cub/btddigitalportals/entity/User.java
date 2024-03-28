@@ -13,7 +13,6 @@ import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.security.authentication.JmixUserDetails;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -45,12 +44,10 @@ public class User implements JmixUserDetails, HasTimeZone {
     @Column(name = "PASSWORD")
     protected String password;
 
-    @NotNull
-    @Column(name = "FIRST_NAME", nullable = false)
+    @Column(name = "FIRST_NAME")
     protected String firstName;
 
-    @NotNull
-    @Column(name = "LAST_NAME", nullable = false)
+    @Column(name = "LAST_NAME")
     protected String lastName;
 
     @Email(message = "{msg://ro.cub.btddigitalportals.entity/User.email.validation.Email}", regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")

@@ -33,9 +33,10 @@ public class EmailService {
                                            String activationCode) throws IOException, EmailException {
         String protocol = environment.getProperty("ext.server.protocol");
         String address = environment.getProperty("ext.server.address");
+        String port = environment.getProperty("ext.server.port");
         // retrieve current locale
         String userLanguageTag = UI.getCurrent().getLocale().toLanguageTag();
-        String activationLink = protocol + "://" + address + ":8181/activateAccount?lang=" + userLanguageTag
+        String activationLink = protocol + "://" + address + ":" + port + "/activateAccount?lang=" + userLanguageTag
                 + "&code=" + Base64.encodeBase64String(activationCode.getBytes());
 
         // prepare email content

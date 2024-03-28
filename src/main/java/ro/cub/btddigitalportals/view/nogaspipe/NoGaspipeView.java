@@ -21,6 +21,7 @@ import io.jmix.flowui.Notifications;
 import io.jmix.flowui.UiComponents;
 import io.jmix.flowui.component.accordion.JmixAccordion;
 import io.jmix.flowui.component.checkbox.JmixCheckbox;
+import io.jmix.flowui.component.combobox.JmixComboBox;
 import io.jmix.flowui.component.formlayout.JmixFormLayout;
 import io.jmix.flowui.component.grid.DataGrid;
 import io.jmix.flowui.component.radiobuttongroup.JmixRadioButtonGroup;
@@ -82,6 +83,12 @@ public class NoGaspipeView extends StandardDetailView<ConnectionRequest> {
     private JmixButton moveForwardClcAddress;
     @ViewComponent
     private AccordionPanel clcAddressInfoPanel;
+    @ViewComponent
+    private JmixComboBox<Object> selectedExecutingEntity;
+    @ViewComponent
+    private FormLayout correspondenceAddressForm;
+    @ViewComponent
+    private JmixRadioButtonGroup<EntityExecutingConnection> entityExecutingRadioGroup;
 
     @Subscribe
     public void onInitEntity(final InitEntityEvent<ConnectionRequest> event) {
@@ -108,16 +115,14 @@ public class NoGaspipeView extends StandardDetailView<ConnectionRequest> {
         // build form containing the client details
         buildPersonalInfoForm(getEditedEntity().getClient());
         clientTypeRadioGroup.setValue(getEditedEntity().getClient().getClientType());
-        // build form containing CLC details
-        buildClcDetailsForm();
 
         // estimated debit is default 0
         estimatedDebitValue.setText("0 mc/h");
+
+        // By default, the executing entity is BTD
+        entityExecutingRadioGroup.setValue(EntityExecutingConnection.BTD);
     }
 
-    private void buildClcDetailsForm() {
-        
-    }
 
     /**
      * Build the form by adding necessary fields for displaying the main client details:
@@ -207,6 +212,7 @@ public class NoGaspipeView extends StandardDetailView<ConnectionRequest> {
 
         accordion.getComponent("personalInfoPanel").getElement().removeAttribute("opened");
         accordion.getComponent("clientTypePanel").getElement().setProperty("opened", "opened");
+        accordion.getComponent("clientTypePanel").scrollIntoView();
     }
 
     @Subscribe(id = "moveForwardClientType", subject = "clickListener")
@@ -222,6 +228,7 @@ public class NoGaspipeView extends StandardDetailView<ConnectionRequest> {
 
         accordion.getComponent("clientTypePanel").getElement().removeAttribute("opened");
         accordion.getComponent("clcAddressInfoPanel").getElement().setProperty("opened", "opened");
+        accordion.getComponent("clcAddressInfoPanel").scrollIntoView();
     }
 
     @Subscribe(id = "moveForwardClcAddress", subject = "clickListener")
@@ -236,6 +243,7 @@ public class NoGaspipeView extends StandardDetailView<ConnectionRequest> {
         } else {
             accordion.getComponent("clcAddressInfoPanel").getElement().removeAttribute("opened");
             accordion.getComponent("devicesPanel").getElement().setProperty("opened", "opened");
+            accordion.getComponent("devicesPanel").scrollIntoView();
         }
     }
 
@@ -312,5 +320,25 @@ public class NoGaspipeView extends StandardDetailView<ConnectionRequest> {
 
         estimatedDebitValue.setText(estimatedDebit + " mc/h");
     }
-    
+
+    @Subscribe(id = "moveForwardDevices", subject = "clickListener")
+    public void onMoveForwardDevicesClick(final ClickEvent<JmixButton> event) {
+        accordion.getComponent("devicesPanel").getElement().removeAttribute("opened");
+        accordion.getComponent("clcTerrainInfoPanel").getElement().setProperty("opened", "opened");
+        accordion.getComponent("clcTerrainInfoPanel").scrollIntoView();
+    }
+
+    @Subscribe(id = "moveForwardClcTerrainInfo", subject = "clickListener")
+    public void onMoveForwardClcTerrainInfoClick(final ClickEvent<JmixButton> event) {
+        accordion.getComponent("clcTerrainInfoPanel").getElement().removeAttribute("opened");
+        accordion.getComponent("attachedDocumentsPanel").getElement().setProperty("opened", "opened");
+        accordion.getComponent("attachedDocumentsPanel").scrollIntoView();
+    }
+
+    @Subscribe("correspondenceAddressCheckBox")
+    public void onCorrespondenceAddressCheckBoxComponentValueChange(final AbstractField.ComponentValueChangeEvent<JmixCheckbox, Boolean> event) {
+        Boolean selected = event.getValue();
+        correspondenceAddressForm.setVisible(selected);
+    }
+
 }
